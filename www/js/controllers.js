@@ -4,6 +4,43 @@ angular.module('starter.controllers', [])
   // Form data for the login modal
   $scope.loginData = {};
 
+  $scope.content = [
+    { 
+      title: 'Things',
+      type: 'list',
+      id: 1,
+      contentRefs: [2, 3, 4]
+    },
+    {
+      title: 'Thing One',
+      type: 'block',
+      id: 2,
+      content: '<p>here is the content for "thing one"</p>'
+    },
+    {
+      title: 'Thing Two',
+      type: 'block',
+      id: 3,
+      content: '<p>here is the content for "thing two"</p>'
+    },
+    {
+      title: 'Thing Three',
+      type: 'block',
+      id: 4,
+      content: '<p>here is the content for "thing three"</p>'
+    }
+
+  ];
+
+  $scope.playlists = [
+    { title: 'Reggae', id: 1 },
+    { title: 'Chill', id: 2 },
+    { title: 'Dubstep', id: 3 },
+    { title: 'Indie', id: 4 },
+    { title: 'Rap', id: 5 },
+    { title: 'Cowbell', id: 6 }
+  ];
+
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
     scope: $scope
@@ -33,16 +70,19 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
+.controller('ItemCtrl', function($scope, $stateParams) {
+  $scope.currentLocation = $stateParams.itemLocation;
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+  var traverse = function(object, path){
+    if (path.length == 0){
+      return object;
+    }else{
+      return traverse(object.content[path.shift()], path);
+    }
+  }
 });
+
+
+
+
+
