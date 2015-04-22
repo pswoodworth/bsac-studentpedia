@@ -1,2 +1,7 @@
 /* Empty. Add your own CSS if you like */
-@import url("//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css");
+p{
+	font-family: 'Georgia';
+	padding: 25px 40px;
+	font-size: 1.1em;
+	line-height: 170%;
+}
