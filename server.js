@@ -49,7 +49,7 @@ var tempContent = {
 		{
 		title: 'Home',
 		contains: 'html',
-		content: '<p><b>this entire app is very rough, and only for demonstration purposes at this point. there is a lot still to be done in styling and typesetting, as well as adding in more content</b><br><br><br>This space will contain upcoming events.</p>'
+		content: '<p><b>hey – this entire app is very rough, and only for demonstration purposes at this point. there is a lot still to be done in styling and typesetting, as well as adding in more content</b><br><br><br>This space will contain upcoming events.</p>'
 		},
 		{
 		title: 'About',
