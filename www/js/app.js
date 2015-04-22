@@ -4,7 +4,27 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers'])
+
+(function() {
+
+var allContent = {};
+
+function fetchData() {
+    var initInjector = angular.injector(["ng"]);
+    var $http = initInjector.get("$http");
+
+    return $http.get('/content').success(function(data, status){
+      allContent = data;
+    });
+}
+
+function bootstrapApplication() {
+    angular.element(document).ready(function() {
+        angular.bootstrap(document, ['readThis']);
+    });
+}
+
+angular.module('readThis', ['ionic', 'readThis.controllers'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -20,6 +40,10 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   });
 })
 
+.run(function($http, $rootScope){
+  $rootScope.allContent = allContent;
+})
+
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
@@ -30,23 +54,6 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     controller: 'AppCtrl'
   })
 
-  .state('app.search', {
-    url: "/search",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/search.html"
-      }
-    }
-  })
-
-  .state('app.browse', {
-    url: "/browse",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/browse.html"
-      }
-    }
-  })
 
   .state('app.item', {
     url: "/item/*itemLocation",
@@ -58,5 +65,11 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/search');
+  $urlRouterProvider.otherwise('/app/item/0');
 });
+
+fetchData().then(bootstrapApplication);
+
+}());
+
+
