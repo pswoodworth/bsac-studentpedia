@@ -1,0 +1,10 @@
+<ion-view view-title="{{item.title}}">
+  <ion-content >
+    <ion-list ng-if="item.contains == 'list'">
+      <ion-item ng-repeat="(id, listItem) in item.content" href="#/app/item/{{currentLocation}}/{{id}}" track by $index>
+        {{listItem.title}}
+      </ion-item>
+    </ion-list>
+  	<div ng-if="item.contains == 'html'" ng-bind-html="item.content"></div>
+  </ion-content>
+</ion-view>
