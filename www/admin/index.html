@@ -6,11 +6,13 @@
 <body ng-app="readThisEditor">
 
 	<script type="text/ng-template"  id="recursive-template">
+	{{data}}
 		<div class="column">
 			<ul ng-if="data.contains == 'list'">
-				<li class="list-item" ng-repeat="item in data.content track by $index">
+				<li class="list-item" ng-repeat="item in data.content">
 					{{item.title}}
-					<div class="column" ng-repeat="(id, data) in data.content track by $index" ng-include="'recursive-template'" ></div;>
+					<div ng-repeat="data in data.content" ng-include="'recursive-template'" >
+					</div>
 				</li>
 			</ul>
 			<div ng-if="data.contains == 'html'" ng-bind-html="data.content">
@@ -20,9 +22,8 @@
 		</div> 
 	</script>
 
-
 	<div id="wrapper" ng-controller="EditorCtrl">
-		<div ng-repeat="data in allContent track by $index" ng-include="'recursive-template'" ></div>
+		<div ng-repeat="data in allContent" ng-include="'recursive-template'" ></div>
 	</div>
 
 	<script src="/lib/angular/angular.js"></script>
