@@ -71,7 +71,7 @@ var tempContent = {
 };
 
 app.get('/content', function(req, res){
-	res.jsonp(tempContent);
+	res.jsonp(allContent);
 });
 
 app.post('/save-content', function(req, res){

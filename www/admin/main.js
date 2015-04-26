@@ -1,4 +1,4 @@
-angular.module('readThisEditor', [])
+angular.module('readThisEditor', ['ngSanitize'])
 .run(function(){
 	// init code if you want
 })
@@ -31,7 +31,17 @@ angular.module('readThisEditor', [])
 
 	$http.get('/content').success(function(data, status){
       addAdminUtils(data);
-      $scope.data = data;
+      $scope.allContent = [data];
     });
 
+})
+
+.directive("compileHtml", function($parse, $sce, $compile) {
+    return {
+        restrict: "A",
+        link: function (scope, element, attributes) {
+ 			scope.content = $sce.trustAsHtml(attributes.compileHtml);
+        },
+        template: '{{content}}'
+    }
 });
