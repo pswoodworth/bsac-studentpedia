@@ -23,7 +23,26 @@ angular.module('readThis.controllers', [])
   $scope.item = traverse($scope.allContent, getPath());
 
 
+})
+
+.directive('ngBindHtmlUnsafe', function($sce){
+    return {
+        scope: {
+            ngBindHtmlUnsafe: '=',
+        },
+        template: "<div ng-bind-html='trustedHtml'></div>",
+        link: function($scope, iElm, iAttrs, controller) {
+            $scope.updateView = function() {
+                $scope.trustedHtml = $sce.trustAsHtml($scope.ngBindHtmlUnsafe);
+            }
+
+            $scope.$watch('ngBindHtmlUnsafe', function(newVal, oldVal) {
+                $scope.updateView(newVal);
+            });
+        }
+    };
 });
+
 
 
 

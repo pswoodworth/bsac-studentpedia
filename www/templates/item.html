@@ -5,6 +5,6 @@
         {{listItem.title}}
       </ion-item>
     </ion-list>
-  	<div ng-if="item.contains == 'html'" class="text-content" ng-bind-html="item.content"></div>
+  	<div ng-if="item.contains == 'html'" class="text-content" ng-bind-html-unsafe="item.content"></div>
   </ion-content>
 </ion-view>
