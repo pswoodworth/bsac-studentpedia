@@ -45,7 +45,7 @@ angular.module('readThisEditor', ['ngSanitize', 'ngQuill'])
 	};
 
 	$scope.deleteItem = function(id, content){
-		if (confirm("Are you sure? This will delete this heading and EVERYTHING under it!") == true){
+		if (confirm("Are you sure you want to delete this?\nThis also delete everything nested under this heading.") == true){
 			content.splice(id, 1);
 		}		
 	};

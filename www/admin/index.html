@@ -14,14 +14,18 @@
 			<i class="fa fa-arrow-up" ng-click="moveItemUpInList($index, $parent.$parent.$parent.$parent.data.content)" ng-if="$index != 0 && $parent.$parent.$parent.$parent.data.contains == 'list'"></i>
 			<i class="fa fa-arrow-down" ng-click="moveItemDownInList($index, $parent.$parent.$parent.$parent.data.content)" ng-if="$index != $parent.$parent.$parent.$parent.data.content.length - 1 && $parent.$parent.$parent.$parent.data.contains == 'list' "></i>
 			<input ng-model="data.title" type="text" class="title">
-			<div ng-if="data.contains == 'list'" class="controls">
-				<button ng-click="addItem('html', data.content)">Add text item to this list</button>
-				<button ng-click="addItem('list', data.content)">Add Nested List to this list</button>
-			</div>
+			
 			<ol ng-if="data.contains == 'list'">
 				<li class="list-item" ng-repeat="data in data.content" ng-include="'recursive-template'">
 				</li>
+				<li>
+					<div ng-if="data.contains == 'list'" class="controls">
+						<button ng-click="addItem('html', data.content)">Add text item to this list</button>
+						<button ng-click="addItem('list', data.content)">Add Nested List to this list</button>
+					</div>
+				</li>
 			</ol>
+
 			<ng-quill-editor ng-if="data.contains == 'html'" ng-model="data.content" toolbar="true" link-tooltip="true" toolbar-entries="size bold list bullet italic underline strike align color background link image" editor-required="true" required="" error-class="input-error">
 			</ng-quill-editor>
 
