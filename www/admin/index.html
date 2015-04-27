@@ -2,34 +2,46 @@
 <head>
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/admin/style.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/lib/quill/dist/quill.base.css">
+	<link rel="stylesheet" type="text/css" href="/lib/quill/dist/quill.snow.css">
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
 <body ng-app="readThisEditor">
 
 	<script type="text/ng-template"  id="recursive-template">
-	{{data}}
-		<div class="column">
-			<ul ng-if="data.contains == 'list'">
-				<li class="list-item" ng-repeat="item in data.content">
-					{{item.title}}
-					<div ng-repeat="data in data.content" ng-include="'recursive-template'" >
-					</div>
-				</li>
-			</ul>
-			<div ng-if="data.contains == 'html'" ng-bind-html="data.content">
-			{{data.content}}
+		<div>
+			<i class="fa fa-trash-o danger" ng-click="deleteItem($index, $parent.$parent.$parent.$parent.data.content)" ng-if="data.title != 'Menu'"></i>
+			<i class="fa fa-arrow-up" ng-click="moveItemUpInList($index, $parent.$parent.$parent.$parent.data.content)" ng-if="$index != 0 && $parent.$parent.$parent.$parent.data.contains == 'list'"></i>
+			<i class="fa fa-arrow-down" ng-click="moveItemDownInList($index, $parent.$parent.$parent.$parent.data.content)" ng-if="$index != $parent.$parent.$parent.$parent.data.content.length - 1 && $parent.$parent.$parent.$parent.data.contains == 'list' "></i>
+			<input ng-model="data.title" type="text" class="title">
+			<div ng-if="data.contains == 'list'" class="controls">
+				<button ng-click="addItem('html', data.content)">Add text item to this list</button>
+				<button ng-click="addItem('list', data.content)">Add Nested List to this list</button>
 			</div>
+			<ol ng-if="data.contains == 'list'">
+				<li class="list-item" ng-repeat="data in data.content" ng-include="'recursive-template'">
+				</li>
+			</ol>
+			<ng-quill-editor ng-if="data.contains == 'html'" ng-model="data.content" toolbar="true" link-tooltip="true" toolbar-entries="size bold list bullet italic underline strike align color background link image" editor-required="true" required="" error-class="input-error">
+			</ng-quill-editor>
 
 		</div> 
 	</script>
-
-	<div id="wrapper" ng-controller="EditorCtrl">
-		<div ng-repeat="data in allContent" ng-include="'recursive-template'" ></div>
+	<div id="container" ng-controller="EditorCtrl">
+		<div id="top-bar">
+			<button id="save" ng-click="save()">Save</button>
+		</div>
+		<div id="wrapper">
+			<div ng-include="'recursive-template'" ></div>
+		</div>
 	</div>
 
-	<script src="/lib/angular/angular.js"></script>
-	<script src="/lib/angular-sanitize/angular-sanitize.js"></script>
-	<script src="/lib/ngquill/src/ng-quill.js"></script>
-	<script src="/admin/main.js"></script>
+	<script type="text/javascript" src="/lib/angular/angular.js"></script>
+	<script type="text/javascript" src="/lib/angular-sanitize/angular-sanitize.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.min.js"></script>
+	<script type="text/javascript" src="/lib/quill/dist/quill.min.js"></script>
+	<script type="text/javascript" src="/lib/ngquill/src/ng-quill.js"></script>
+	<script type="text/javascript" src="/admin/main.js"></script>
 </body>
 
 </html>

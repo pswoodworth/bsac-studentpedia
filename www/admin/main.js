@@ -1,47 +1,57 @@
-angular.module('readThisEditor', ['ngSanitize'])
+angular.module('readThisEditor', ['ngSanitize', 'ngQuill'])
 .run(function(){
 	// init code if you want
 })
 
 .controller('EditorCtrl', function($scope, $http){
 
-	var addAdminUtils = function(object){
-		if (object.contains == 'list'){
-			object.activeId = 0;
-			object.addItem = function(item){
-				this.content.push(item);
-				// set the new item to active
-				object.activeId = this.content.length - 1;
-			}
-			for (id in object.content){
-				addAdminUtils(object.content[id]);
-			}
-		}
-	};
-
-	var removeAdminUtils = function(object){
-		if (object.contains == 'list'){
-			delete object.activeId;
-			delete object.addItem;
-			for (id in object.content){
-				removeAdminUtils(object.content[id]);
-			}
-		}
-	};
-
 	$http.get('/content').success(function(data, status){
-      addAdminUtils(data);
-      $scope.allContent = [data];
+      $scope.data = data;
     });
 
-})
+	$scope.save = function(){
+		console.log($scope.data);
+	    $http.post('/save', {data: $scope.data}).success(function(status){
+	    	console.log('success');
+	    });
+	};
 
-.directive("compileHtml", function($parse, $sce, $compile) {
-    return {
-        restrict: "A",
-        link: function (scope, element, attributes) {
- 			scope.content = $sce.trustAsHtml(attributes.compileHtml);
-        },
-        template: '{{content}}'
-    }
+    $scope.addItem = function(type, content){
+    	console.log(content);
+		var item = {
+			title: 'new item title',
+			contains: type,
+		};
+		if(type == 'list'){
+			item.content = [];
+			item.addItem = this;
+		}
+		if(type == 'html'){
+			item.content = '<p>enter content here</p>';
+		}
+		content.push(item);
+	};
+
+	$scope.moveItemUpInList = function(id, content){
+		var temp = content[id - 1];
+		content[id - 1] = content[id];
+		content[id] = temp;	
+	};
+
+	$scope.moveItemDownInList =function(id, content){
+		var temp = content[id + 1];
+		content[id + 1] = content[id];
+		content[id] = temp;	
+	};
+
+	$scope.deleteItem = function(id, content){
+		if (confirm("Are you sure? This will delete this heading and EVERYTHING under it!") == true){
+			content.splice(id, 1);
+		}		
+	};
+
 });
+
+
+
+
