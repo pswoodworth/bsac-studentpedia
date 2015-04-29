@@ -1,6 +1,6 @@
 {
   "name": "bps-ionic",
-  "app_id": "",
+  "app_id": "1cfcac72",
   "gulpStartupTasks": [
     "sass",
     "watch"

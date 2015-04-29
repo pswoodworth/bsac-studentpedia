@@ -13,7 +13,7 @@ function fetchData() {
     var initInjector = angular.injector(["ng"]);
     var $http = initInjector.get("$http");
 
-    return $http.get('/content').success(function(data, status){
+    return $http.get('http://student-rights.herokuapp.com/content').success(function(data, status){
       allContent = data;
     });
 }
