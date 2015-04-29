@@ -54,6 +54,14 @@ angular.module('readThis', ['ionic', 'readThis.controllers'])
     controller: 'AppCtrl'
   })
 
+  .state('app.browse', {
+    url: "/home",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/home.html"
+      }
+    }
+  })
 
   .state('app.item', {
     url: "/item/*itemLocation",
@@ -65,7 +73,7 @@ angular.module('readThis', ['ionic', 'readThis.controllers'])
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/item/0');
+  $urlRouterProvider.otherwise('/app/home');
 });
 
 fetchData().then(bootstrapApplication);

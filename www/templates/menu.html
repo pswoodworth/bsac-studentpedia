@@ -18,6 +18,7 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
+        <ion-item nav-clear menu-close href="#/app/home">Home</ion-item>
         <ion-item ng-repeat="(id, item) in allContent.content" nav-clear menu-close href="#/app/item/{{id}}">
           {{item.title}}
         </ion-item>

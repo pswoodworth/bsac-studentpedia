@@ -15,9 +15,8 @@
 	text-align: right;
 }
 
-#save{
-	margin: 16px 22px;
-	background-color: #4A90E2;
+#top-bar button{
+	margin-top: 16px;
 	border: 0px;
 	color: white;
 	border-radius: 7px;
@@ -25,8 +24,18 @@
 	opacity: .9;
 }
 
-#save:hover{
+button:hover{
 	opacity: 1;
+}
+
+button.blue{
+	background-color: #4A90E2;
+	margin-right: 22px;
+}
+
+button.orange{
+	background-color: #f3933b;
+	margin-right: 6px;
 }
 
 
