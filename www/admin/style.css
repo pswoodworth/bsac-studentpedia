@@ -63,16 +63,16 @@ input.title:focus{
 }
 
 
-i{
+i.fa{
 	cursor: pointer;
 	cursor: hand;
 	color: #CCC;
 }
 
-i:hover{
+i.fa:hover{
 	color: black;
 }
 
-i.danger:hover{
+i.fa.danger:hover{
 	color: red;
 }
