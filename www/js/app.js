@@ -1,28 +1,37 @@
-// Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js
+// this is kind of a gnarley way to bootstrap an angular app,
+// but is kind of a necessary step when working with ionic 
+// with this type of content
 
 (function() {
 
-var allContent = {};
+var contentReq = null;
 
 function fetchData() {
     var initInjector = angular.injector(["ng"]);
     var $http = initInjector.get("$http");
+    var $q = initInjector.get('$q');
 
-    return $http.get('http://student-rights.herokuapp.com/content').success(function(data, status){
-      allContent = data;
-    });
-}
+    if (window.localStorage.getItem('bsr-content') === null){
+      return $http.get('http://student-rights.herokuapp.com/content').success(function(data, status){
+        window.localStorage.setItem('bsr-content', JSON.stringify(data));
+      });
+    }else{
+      contentReq = $http.get('http://student-rights.herokuapp.com/content');
+
+      function defer() {
+        return $q(function(resolve, reject) {
+          resolve('success');
+        });
+      }
+      return defer();
+    };
+};
 
 function bootstrapApplication() {
     angular.element(document).ready(function() {
         angular.bootstrap(document, ['readThis']);
     });
-}
+};
 
 angular.module('readThis', ['ionic', 'readThis.controllers'])
 
@@ -41,7 +50,11 @@ angular.module('readThis', ['ionic', 'readThis.controllers'])
 })
 
 .run(function($http, $rootScope){
-  $rootScope.allContent = allContent;
+  $rootScope.allContent = JSON.parse(window.localStorage.getItem('bsr-content'));
+  contentReq.success(function(data){
+    $rootScope.allContent = data;
+    window.localStorage.setItem('bsr-content', JSON.stringify(data));
+  });
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
