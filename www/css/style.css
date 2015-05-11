@@ -1,7 +1,7 @@
 
 .text-content{
 	font-family: 'Georgia';
-	padding: 25px 40px;
+	padding: 25px 15px;
 	font-size: 1.1em;
 	line-height: 170%;
 }
@@ -17,4 +17,12 @@ i{
 
 img{
 	max-width: 100%;
+}
+
+.item.item-complex{
+	font-family: 'FontAwesome';
+}
+
+.title.title-center{
+	font-family: 'FontAwesome';
 }

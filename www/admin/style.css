@@ -44,6 +44,7 @@ input.title{
 	font-weight: bolder;
 	border: 0px;
 	margin-bottom: 20px;
+	font-family: 'FontAwesome';
 }
 
 input.title:focus{
