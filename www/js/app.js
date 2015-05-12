@@ -51,10 +51,12 @@ angular.module('readThis', ['ionic', 'readThis.controllers'])
 
 .run(function($http, $rootScope){
   $rootScope.allContent = JSON.parse(window.localStorage.getItem('bsr-content'));
-  contentReq.success(function(data){
-    $rootScope.allContent = data;
-    window.localStorage.setItem('bsr-content', JSON.stringify(data));
-  });
+  if (contentReq != null){
+    contentReq.success(function(data){
+      $rootScope.allContent = data;
+      window.localStorage.setItem('bsr-content', JSON.stringify(data));
+    });
+  };
 })
 
 .config(function($stateProvider, $urlRouterProvider) {

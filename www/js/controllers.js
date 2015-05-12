@@ -2,6 +2,18 @@ angular.module('readThis.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
+  // Create the login modal that we will use later
+  $ionicModal.fromTemplateUrl('templates/disclaimer.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.modal = modal;
+    $scope.modal.show();
+  });
+
+  $scope.dismissDisclaimer = function(){
+    $scope.modal.hide();
+  }
+
 
 })
 

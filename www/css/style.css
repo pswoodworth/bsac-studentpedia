@@ -1,9 +1,30 @@
 
-.text-content{
+.text-content, #disclaimer{
 	font-family: 'Georgia';
-	padding: 25px 15px;
+	padding: 35px 15px;
 	font-size: 1.1em;
 	line-height: 170%;
+}
+
+#disclaimer{
+	text-align: center;
+}
+
+#disclaimer button{
+	max-width: 100px;
+	text-align: center;
+	display: inline-block;
+	margin-top: 25px;
+}
+
+#disclaimer ol{
+	list-style-type: decimal;
+	padding-left: 20px;
+}
+
+#diclaimer li{
+	width: intrinsic;
+	padding-left: 20px;
 }
 
 .text-content li{
