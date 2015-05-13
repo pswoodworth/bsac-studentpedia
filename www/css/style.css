@@ -4,6 +4,7 @@
 	padding: 35px 15px;
 	font-size: 1.1em;
 	line-height: 170%;
+	color: #222;
 }
 
 #disclaimer{
@@ -47,3 +48,91 @@ img{
 .title.title-center{
 	font-family: 'FontAwesome';
 }
+
+span.back-text{
+	font-family: 'FontAwesome';
+}
+
+#home{
+	text-align: center;
+	padding-top: 35px;
+}
+
+#logo{
+	width: 150px;
+}
+
+#title{
+	font-family: 'Georgia';
+	font-size: 18pt;
+	font-weight: bold;
+	color: #222;
+	padding-top: 17px;
+}
+
+#make-webclip-wrapper{
+	position: fixed;
+	bottom: 5px;
+	text-align: center;
+	width: 100%;
+}
+
+#make-webclip{
+	background-color: #f3f3f3;
+	color: #222;
+	font-family: 'Georgia';
+	width: 250px;
+	margin: 0 auto;
+	/*position: absolute;*/
+	padding: 6px;
+	display: inline-block;
+}
+
+#downarrow{
+	width: 0; 
+	height: 0; 
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;	
+	border-top: 20px solid #f3f3f3;
+	display: inline-block;
+}
+
+@keyframes bounceInUp {
+  0%, 60%, 75%, 90%, 100% {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 3000px, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  75% {
+    transform: translate3d(0, 10px, 0);
+  }
+
+  90% {
+    transform: translate3d(0, -5px, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.bounceInUp {
+  animation-name: bounceInUp;
+}
+
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+
+

@@ -5,6 +5,7 @@
 (function() {
 
 var contentReq = null;
+var allContent = {};
 
 function fetchData() {
     var initInjector = angular.injector(["ng"]);
@@ -13,7 +14,12 @@ function fetchData() {
 
     if (window.localStorage.getItem('bsr-content') === null){
       return $http.get('http://student-rights.herokuapp.com/content').success(function(data, status){
-        window.localStorage.setItem('bsr-content', JSON.stringify(data));
+        try{
+          window.localStorage.setItem('bsr-content', JSON.stringify(data));
+        }catch(err){
+          console.log('local storage not supported');
+          allContent = data;
+        };
       });
     }else{
       contentReq = $http.get('http://student-rights.herokuapp.com/content');
@@ -50,11 +56,15 @@ angular.module('readThis', ['ionic', 'readThis.controllers'])
 })
 
 .run(function($http, $rootScope){
-  $rootScope.allContent = JSON.parse(window.localStorage.getItem('bsr-content'));
+  $rootScope.allContent = JSON.parse(window.localStorage.getItem('bsr-content')) || allContent;
   if (contentReq != null){
     contentReq.success(function(data){
       $rootScope.allContent = data;
-      window.localStorage.setItem('bsr-content', JSON.stringify(data));
+      try{
+          window.localStorage.setItem('bsr-content', JSON.stringify(data));
+        }catch(err){
+          console.log('local storage not supported');
+        };
     });
   };
 })

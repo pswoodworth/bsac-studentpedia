@@ -31,19 +31,31 @@
 
 		</div> 
 	</script>
+
 	<div id="container" ng-controller="EditorCtrl">
 		<div id="top-bar">
-			<!-- <button class="orange" ng-click="convertImage()">Convert Image Link</button> -->
-			<button class="blue" ng-click="save()">Save</button>
+			<div id="menu-wrapper">
+				<a href="" ng-click="state = 'events'" class="menu" ng-class="{active: state == 'events'}">events</a>
+				<a href="" ng-click="state = 'content'" class="menu" ng-class="{active: state == 'content'}">content</a>
+			</div>
+			<button class="blue" ng-click="save()" ng-show="state == 'content'">Save</button>
 		</div>
-		<div id="wrapper">
+		<div id="wrapper" ng-show="state == 'content'">
 			<div ng-include="'recursive-template'" ></div>
+		</div>
+		<div id="wrapper" ng-show="state =='events'">
+			<b>Upcoming Events</b>
+			<div>
+		      <datepicker ng-model="date" ng-change="updateDate()"></datepicker>
+		      <timepicker ng-model="time" ng-change="updateDate()"></timepicker>
+		      {{combinedDate}}
+		    </div>
 		</div>
 	</div>
 
+
 	<script type="text/javascript" src="/lib/angular/angular.js"></script>
 	<script type="text/javascript" src="/lib/angular-sanitize/angular-sanitize.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.min.js"></script>
 	<script type="text/javascript" src="/lib/quill/dist/quill.min.js"></script>
 	<script type="text/javascript" src="/lib/ngquill/src/ng-quill.js"></script>

@@ -1,9 +1,11 @@
-angular.module('readThisEditor', ['ngSanitize', 'ngQuill'])
+angular.module('readThisEditor', ['ngSanitize', 'ngQuill', 'ui.bootstrap'])
 .run(function(){
 	// init code if you want
 })
 
 .controller('EditorCtrl', function($scope, $http){
+
+	$scope.state = 'content';
 
 	$http.get('/content').success(function(data, status){
       $scope.data = data;
@@ -48,6 +50,14 @@ angular.module('readThisEditor', ['ngSanitize', 'ngQuill'])
 		if (confirm("Are you sure you want to delete this?\nThis also delete everything nested under this heading.") == true){
 			content.splice(id, 1);
 		}		
+	};
+
+
+    $scope.date = new Date();
+    $scope.time = new Date();
+
+    $scope.updateDate = function(){
+		$scope.combinedDate = new Date($scope.date.getFullYear(), $scope.date.getMonth(), $scope.date.getDate(), $scope.time.getHours(), $scope.time.getMinutes(), $scope.time.getSeconds());
 	};
 
 });

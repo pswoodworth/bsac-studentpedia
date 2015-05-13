@@ -1,19 +1,23 @@
 angular.module('readThis.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $http) {
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/disclaimer.html', {
     scope: $scope
   }).then(function(modal) {
     $scope.modal = modal;
-    $scope.modal.show();
+    if (window.localStorage.getItem('bsr-modal-dismissed') === null){
+      $scope.modal.show();
+    };
   });
 
   $scope.dismissDisclaimer = function(){
     $scope.modal.hide();
-  }
+    window.localStorage.setItem('bsr-modal-dismissed', true);
+  };
 
+  $scope.iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
 
 })
 

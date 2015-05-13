@@ -6,6 +6,8 @@ var express = require('express'),
 require('dotenv').load();
 app.use(express.static('www'));
 
+var apicache = require('apicache').options({ debug: true }).middleware;
+
 // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
 app.all('*', function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
@@ -25,7 +27,7 @@ console.log(mongoUrl);
 
 app.use(bodyParser.json());
 
-app.get('/content', function(req, res){
+app.get('/content',  function(req, res){
 	// res.jsonp(allContent);
 
 	MongoClient.connect(mongoUrl, function(err, db) {
@@ -44,10 +46,8 @@ app.get('/content', function(req, res){
 });
 
 app.post('/save', function(req, res){
-	console.log(req.body);
 
 	MongoClient.connect(mongoUrl, function(err, db) {
-	  console.log("Connected correctly to server");
 
 	  var collection = db.collection('live');
 	  // Insert some documents
@@ -55,7 +55,7 @@ app.post('/save', function(req, res){
 	  	if (err){
 	  		console.log(err);
 	  	}else{
-	  		console.log(result);
+	  		console.log('sucessfully saved');
 	  	}
 	  	 db.close();
 	  });

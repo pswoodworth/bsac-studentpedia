@@ -1,7 +1,15 @@
-<ion-view view-title="Student Rights">
-  <ion-content >
-		To do:<br>
-        Upcoming events will go here
-
+<ion-view view-title="Boston Student Rights">
+  <ion-content id="home">
+		<img src="/img/logo.png" id="logo">
+		<p id="title">Boston Student Rights</p>
+		<!-- <p id="events-title">UPCOMING EVENTS</p> -->
+		
   </ion-content>
+  <div id="make-webclip-wrapper" ng-if="iOS" class="animated bounceInUp">
+			<div id="make-webclip" >
+				<p>Save Boston Student Rights to your home screen!</p>
+				<small>Tap below and choose Add to Home Screen.</small>
+			</div><br>
+			<div id="downarrow"></div>
+		</div>
 </ion-view>

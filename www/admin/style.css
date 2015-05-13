@@ -24,6 +24,26 @@
 	opacity: .9;
 }
 
+#menu-wrapper{
+	position: absolute;
+	left: 30px;
+	top: 20px;
+	font-size: 12pt;
+}
+
+.menu{
+	font-weight: light;
+	padding-right: 25px;
+	width: 80px;
+	text-align: center;
+	display: inline-block;
+}
+
+.menu:hover, .menu.active{
+	text-decoration: none;
+	font-weight: bold;
+}
+
 button:hover{
 	opacity: 1;
 }
