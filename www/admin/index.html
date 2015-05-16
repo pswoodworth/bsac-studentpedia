@@ -10,9 +10,9 @@
 
 	<script type="text/ng-template"  id="recursive-template">
 		<div>
-			<i class="fa fa-trash-o danger" ng-click="deleteItem($index, $parent.$parent.$parent.$parent.data.content)" ng-if="data.title != 'Menu'"></i>
-			<i class="fa fa-arrow-up" ng-click="moveItemUpInList($index, $parent.$parent.$parent.$parent.data.content)" ng-if="$index != 0 && $parent.$parent.$parent.$parent.data.contains == 'list'"></i>
-			<i class="fa fa-arrow-down" ng-click="moveItemDownInList($index, $parent.$parent.$parent.$parent.data.content)" ng-if="$index != $parent.$parent.$parent.$parent.data.content.length - 1 && $parent.$parent.$parent.$parent.data.contains == 'list' "></i>
+			<i class="fa fa-trash-o danger control" ng-click="deleteItem($index, $parent.$parent.$parent.$parent.data.content)" ng-if="data.title != 'Menu'"></i>
+			<i class="fa fa-arrow-up control" ng-click="moveItemUpInList($index, $parent.$parent.$parent.$parent.data.content)" ng-if="$index != 0 && $parent.$parent.$parent.$parent.data.contains == 'list'"></i>
+			<i class="fa fa-arrow-down control" ng-click="moveItemDownInList($index, $parent.$parent.$parent.$parent.data.content)" ng-if="$index != $parent.$parent.$parent.$parent.data.content.length - 1 && $parent.$parent.$parent.$parent.data.contains == 'list' "></i>
 			<input ng-model="data.title" type="text" class="title">
 			
 			<ol ng-if="data.contains == 'list'">
@@ -38,7 +38,11 @@
 				<a href="" ng-click="state = 'events'" class="menu" ng-class="{active: state == 'events'}">events</a>
 				<a href="" ng-click="state = 'content'" class="menu" ng-class="{active: state == 'content'}">content</a>
 			</div>
-			<button class="blue" ng-click="save()" ng-show="state == 'content'">Save</button>
+			<button class="blue" ng-click="save()" ng-show="state == 'content'">
+				<span ng-show="saveState == 'ready'">Save</span>
+				<span ng-show="saveState == 'waiting'"><i class="fa fa-spinner fa-spin fa-lg save-state"></i></span>
+				<span ng-show="saveState == 'success'"><i class="fa fa-check fa-lg save-state"></i></span>
+			</button>
 		</div>
 		<div id="wrapper" ng-show="state == 'content'">
 			<div ng-include="'recursive-template'" ></div>

@@ -3,7 +3,9 @@ angular.module('readThisEditor', ['ngSanitize', 'ngQuill', 'ui.bootstrap'])
 	// init code if you want
 })
 
-.controller('EditorCtrl', function($scope, $http){
+.controller('EditorCtrl', function($scope, $http, $timeout){
+
+	$scope.saveState = 'ready';
 
 	$scope.state = 'content';
 
@@ -12,10 +14,18 @@ angular.module('readThisEditor', ['ngSanitize', 'ngQuill', 'ui.bootstrap'])
     });
 
 	$scope.save = function(){
-		console.log($scope.data);
-	    $http.post('/save', {data: $scope.data}).success(function(status){
-	    	console.log('success');
-	    });
+		if($scope.saveState == 'ready'){
+			$scope.saveState = 'waiting';
+		    $http.post('/save', {data: $scope.data}).success(function(status){
+		    	$timeout(function(){
+		    		$scope.saveState = 'ready';
+		    	}, 2500);
+		    	$scope.saveState = 'success';
+		    }).error(function(data, status, headers, config){
+		    	window.alert('There was an error saving.')
+		    	$scope.saveState = 'ready';
+		    });
+		};
 	};
 
     $scope.addItem = function(type, content){

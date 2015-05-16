@@ -53,6 +53,10 @@ button.blue{
 	margin-right: 22px;
 }
 
+.save-state{
+	padding: 3px 5px 4px 5px;
+}
+
 button.orange{
 	background-color: #f3933b;
 	margin-right: 6px;
@@ -93,16 +97,16 @@ input.title:focus{
 }
 
 
-i.fa{
+i.control{
 	cursor: pointer;
 	cursor: hand;
 	color: #CCC;
 }
 
-i.fa:hover{
+i.control:hover{
 	color: black;
 }
 
-i.fa.danger:hover{
+i.control.danger:hover{
 	color: red;
 }

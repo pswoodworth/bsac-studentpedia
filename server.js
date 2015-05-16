@@ -61,6 +61,8 @@ app.post('/save', function(req, res){
 	  });
 
 	});
+
+	res.send('success');
 });
 
 
