@@ -1,10 +1,31 @@
 var express = require('express'),
 	app = express(),
 	bodyParser = require('body-parser'),
-	MongoClient = require('mongodb').MongoClient;
+	MongoClient = require('mongodb').MongoClient,
+	session = require('express-session'),
+	MongoStore = require('connect-mongo')(session);
 
 require('dotenv').load();
 app.use(express.static('www'));
+app.use(bodyParser.json());
+
+// creating database connections
+var mongoUrl = process.env.MONGO_URI;
+var collection;
+var database;
+
+MongoClient.connect(mongoUrl, function(err, db) {
+	database = db;
+	collection = db.collection('live');
+});
+
+
+// establish mongo session store (used for admin logins)
+app.use(session({
+    store: new MongoStore({ url: mongoUrl }),
+    secret: 'sdkwn2393njwle@awENFkw'
+}));
+
 
 var apicache = require('apicache').options({ debug: true }).middleware;
 
@@ -16,53 +37,31 @@ app.all('*', function(req, res, next) {
 });
 
 
-var mongoUrl = process.env.MONGO_URI;
-
-console.log(mongoUrl);
-
-
-
 // API Routes
-// app.get('/blah', routeHandler);
+app.get('/admin(|/*)', function(req, res){
+    var uid = req.params.uid,
+        path = req.params[0] ? req.params[0] : '/index.html';
+    res.sendFile(path, {root: './admin'});
+});
 
-app.use(bodyParser.json());
-
-app.get('/content',  function(req, res){
-	// res.jsonp(allContent);
-
-	MongoClient.connect(mongoUrl, function(err, db) {
-
-	  var collection = db.collection('live');
-	  // Insert some documents
-	  collection.find().limit(1).sort({$natural:-1}).toArray(function(err, docs){
-	  	result = docs[0];
-	  	delete result._id;
-	  	res.jsonp(result);
-	  	db.close();
-	  });
-
+app.get('/content', function(req, res){
+	collection.find().limit(1).sort({$natural:-1}).toArray(function(err, docs){
+		result = docs[0];
+		delete result._id;
+		res.jsonp(result);
 	});
-
 });
 
 app.post('/save', function(req, res){
 
-	MongoClient.connect(mongoUrl, function(err, db) {
-
-	  var collection = db.collection('live');
-	  // Insert some documents
 	  collection.insert(req.body.data, function(err,result){
 	  	if (err){
 	  		console.log(err);
 	  	}else{
 	  		console.log('sucessfully saved');
+	  		res.send('success');
 	  	}
-	  	 db.close();
 	  });
-
-	});
-
-	res.send('success');
 });
 
 
