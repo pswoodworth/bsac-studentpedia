@@ -12,7 +12,14 @@ function fetchData() {
     var $http = initInjector.get("$http");
     var $q = initInjector.get('$q');
 
-    if (window.localStorage.getItem('bsr-content') === null){
+    var cachedContent = null;
+    try{
+      cachedContent = window.localStorage.getItem('bsr-content');
+    }catch(err){
+      'local storage not supported'
+    };
+
+    if (cachedContent === null){
       return $http.get('http://student-rights.herokuapp.com/content').success(function(data, status){
         try{
           window.localStorage.setItem('bsr-content', JSON.stringify(data));

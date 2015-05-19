@@ -19,6 +19,8 @@ angular.module('readThis.controllers', [])
 
   $scope.iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
 
+  $scope.webclip = window.navigator.standalone;
+
 })
 
 .controller('ItemCtrl', function($scope, $stateParams) {
