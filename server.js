@@ -3,7 +3,8 @@ var express = require('express'),
 	bodyParser = require('body-parser'),
 	MongoClient = require('mongodb').MongoClient,
 	session = require('express-session'),
-	MongoStore = require('connect-mongo')(session);
+	MongoStore = require('connect-mongo')(session),
+	basicAuth = require('basic-auth');
 
 require('dotenv').load();
 app.use(express.static('www'));
@@ -11,6 +12,8 @@ app.use(bodyParser.json());
 
 // creating database connections
 var mongoUrl = process.env.MONGO_URI;
+var authUser = process.env.AUTH_USER;
+var authPass = process.env.AUTH_PASS;
 var collection;
 var database;
 
@@ -27,6 +30,28 @@ app.use(session({
 }));
 
 
+// basic-auth
+
+var auth = function (req, res, next) {
+  function unauthorized(res) {
+    res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+    return res.sendStatus(401);
+  };
+
+  var user = basicAuth(req);
+
+  if (!user || !user.name || !user.pass) {
+    return unauthorized(res);
+  };
+
+  if (user.name === authUser && user.pass === authPass) {
+    return next();
+  } else {
+    return unauthorized(res);
+  };
+};
+
+
 var apicache = require('apicache').options({ debug: true }).middleware;
 
 // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
@@ -38,12 +63,6 @@ app.all('*', function(req, res, next) {
 
 
 // API Routes
-app.get('/admin(|/*)', function(req, res){
-    var uid = req.params.uid,
-        path = req.params[0] ? req.params[0] : '/index.html';
-    res.sendFile(path, {root: './admin'});
-});
-
 app.get('/content', function(req, res){
 	collection.find().limit(1).sort({$natural:-1}).toArray(function(err, docs){
 		result = docs[0];
@@ -52,7 +71,13 @@ app.get('/content', function(req, res){
 	});
 });
 
-app.post('/save', function(req, res){
+app.get('/admin(|/*)', auth, function(req, res){
+    var uid = req.params.uid,
+        path = req.params[0] ? req.params[0] : '/index.html';
+    res.sendFile(path, {root: './admin'});
+});
+
+app.post('/save', auth, function(req, res){
 
 	  collection.insert(req.body.data, function(err,result){
 	  	if (err){
