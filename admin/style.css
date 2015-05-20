@@ -15,7 +15,7 @@
 	text-align: right;
 }
 
-#top-bar button{
+button.bps{
 	margin-top: 16px;
 	border: 0px;
 	color: white;
@@ -29,6 +29,38 @@
 	left: 30px;
 	top: 20px;
 	font-size: 12pt;
+}
+
+.events{
+	width: 100%;
+}
+
+.events textarea{
+	width: 50%;
+}
+
+
+.event-time{
+	display: inline-block;
+}
+
+.event-text{
+	display: inline-block;
+	margin-left: 15px;
+	vertical-align: top;
+}
+
+.event-text p{
+	margin-top: 10px;
+}
+
+.event-text textarea{
+	width: 400px !important;
+	resize: none;
+}
+
+.event-text input{
+	width: 400px;
 }
 
 .menu{

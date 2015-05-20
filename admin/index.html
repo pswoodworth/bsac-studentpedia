@@ -38,7 +38,7 @@
 				<a href="" ng-click="state = 'events'" class="menu" ng-class="{active: state == 'events'}">events</a>
 				<a href="" ng-click="state = 'content'" class="menu" ng-class="{active: state == 'content'}">content</a>
 			</div>
-			<button class="blue" ng-click="save()" ng-show="state == 'content'">
+			<button class="bps blue" ng-click="save()">
 				<span ng-show="saveState == 'ready'">Save</span>
 				<span ng-show="saveState == 'waiting'"><i class="fa fa-spinner fa-spin fa-lg save-state"></i></span>
 				<span ng-show="saveState == 'success'"><i class="fa fa-check fa-lg save-state"></i></span>
@@ -49,11 +49,21 @@
 		</div>
 		<div id="wrapper" ng-show="state =='events'">
 			<b>Upcoming Events</b>
-			<div>
-		      <datepicker ng-model="date" ng-change="updateDate()"></datepicker>
-		      <timepicker ng-model="time" ng-change="updateDate()"></timepicker>
-		      {{combinedDate}}
+			<div ng-repeat="event in events" class="events">
+				<div class="event-time">
+			      <datepicker ng-model="event.date" ng-change="updateDate(event)"></datepicker>
+			      <timepicker ng-model="event.time" ng-change="updateDate(event)"></timepicker>
+			    </div>
+			    <div class="event-text">
+			    	<p>description</p>
+				      <textarea ng-model="event.description"></textarea>
+				    <p>location</p>
+				      <input type="text" ng-model="event.location">
+			    </div>
+			    <button class="bps orange" ng-click="deleteEvent($index)">delete event</button>
+		      <hr>
 		    </div>
+		    <button class="bps blue" ng-click="addEvent()">add an event</button>
 		</div>
 	</div>
 

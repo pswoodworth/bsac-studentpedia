@@ -13,10 +13,15 @@ angular.module('readThisEditor', ['ngSanitize', 'ngQuill', 'ui.bootstrap'])
       $scope.data = data;
     });
 
+    $http.get('/events').success(function(data, status){
+      $scope.events = data;
+      console.log(data);
+    });
+
 	$scope.save = function(){
 		if($scope.saveState == 'ready'){
 			$scope.saveState = 'waiting';
-		    $http.post('/save', {data: $scope.data}).success(function(status){
+		    $http.post('/save', {data: $scope.data, events: $scope.events}).success(function(status){
 		    	$timeout(function(){
 		    		$scope.saveState = 'ready';
 		    	}, 2500);
@@ -63,11 +68,25 @@ angular.module('readThisEditor', ['ngSanitize', 'ngQuill', 'ui.bootstrap'])
 	};
 
 
-    $scope.date = new Date();
-    $scope.time = new Date();
+	$scope.addEvent = function(){
+		$scope.events.push({
+			time:new Date(),
+			date:new Date(),
+			datetime: new Date(),
+			description: '',
+			location: ''
+		});
+	};
 
-    $scope.updateDate = function(){
-		$scope.combinedDate = new Date($scope.date.getFullYear(), $scope.date.getMonth(), $scope.date.getDate(), $scope.time.getHours(), $scope.time.getMinutes(), $scope.time.getSeconds());
+	$scope.deleteEvent = function(id){
+		$scope.events.splice(id, 1);
+		$http.post('/delete-event', {'id': $scope.events[id]._id}).success(function(data, status){
+			console.log('successfully deleted');
+		});
+	};
+
+    $scope.updateDate = function(event){
+		event.datetime = new Date(event.date.getFullYear(), event.date.getMonth(), event.date.getDate(), event.time.getHours(), event.time.getMinutes(), event.time.getSeconds());
 	};
 
 });
