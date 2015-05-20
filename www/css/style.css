@@ -45,7 +45,7 @@ span.back-text{
 
 #home{
 	text-align: center;
-	padding-top: 27px;
+	padding-top: 36px;
 }
 
 #logo{
@@ -59,7 +59,7 @@ span.back-text{
 	font-weight: bold;
 	color: #222;
 	padding-top: 12px;
-	padding-bottom: 35px;
+	padding-bottom: 38px;
 }
 
 #about{
@@ -74,7 +74,7 @@ span.back-text{
 }
 
 .org-logo{
-	width: 90px;
+	width: 70px;
 	margin: 0px 5px;
 }
 
