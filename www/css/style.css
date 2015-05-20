@@ -45,20 +45,21 @@ span.back-text{
 
 #home{
 	text-align: center;
-	padding-top: 25px;
+	padding-top: 27px;
 }
 
 #logo{
-	width: 150px;
+	width: 110px;
 }
+
 
 #title{
 	font-family: 'Georgia';
-	font-size: 18pt;
+	font-size: 16pt;
 	font-weight: bold;
 	color: #222;
 	padding-top: 12px;
-	padding-bottom: 8px;
+	padding-bottom: 35px;
 }
 
 #about{
@@ -68,8 +69,12 @@ span.back-text{
 	margin-right: 15px;
 }
 
+.bps-logo{
+	width: 140px;
+}
+
 .org-logo{
-	width: 100px;
+	width: 90px;
 	margin: 0px 5px;
 }
 
