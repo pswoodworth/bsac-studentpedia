@@ -5,6 +5,7 @@ var express = require('express'),
 	BSON = require('mongodb').BSONPure,
 	basicAuth = require('basic-auth'),
 	async = require('async');
+	_ = require('lodash');
 
 
 require('dotenv').load();
@@ -70,12 +71,13 @@ app.get('/content', function(req, res){
 });
 
 app.get('/events', function(req, res){
-	// var now = new Date()
-	eventsCollection.find().limit(10).toArray(function(err, docs){
+	eventsCollection.find({"datetime" : { $gte : new Date().toISOString() }}).toArray(function(err,docs){
 		console.log(docs);
 		res.jsonp(docs);
 	});
 });
+
+
 
 app.get('/admin(|/*)', auth, function(req, res){
     var uid = req.params.uid,
@@ -97,15 +99,29 @@ app.post('/save', auth, function(req, res){
 			});
 		},
 		function(next){
-			eventsCollection.update(req.body.events, { ordered: false, upsert: true }, function(err,result){
-				if (err){
-					console.log(err);
-					res.sendStatus(500);
-				}else{
-					console.log('sucessfully saved events');
-					next()
-				}
-			});
+			// this is really sloppy, but is a quick way to get around the
+			// weirdness of upserts and dealing with edge cases that can come with it.
+			if(req.body.events.length > 0){
+				eventsCollection.remove({}, function(err, result){
+					if (err){
+						console.log(err);
+						res.sendStatus(500);
+					}else{
+						eventsCollection.insert(req.body.events, function(err,result){
+							if (err){
+								console.log(err);
+								res.sendStatus(500);
+							}else{
+								console.log('sucessfully saved events');
+								next();
+							}
+						});
+					}
+				});
+			}else{
+				console.log('no events included, skipping event save.')
+				next();
+			}
 		}
 	], function(err, results){
 		res.sendStatus(200);

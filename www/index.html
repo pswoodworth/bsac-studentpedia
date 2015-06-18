@@ -49,6 +49,8 @@
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
+    <script src="lib/moment/moment.js"></script>
+
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
@@ -58,6 +60,16 @@
   </head>
 
   <body>
-    <ion-nav-view></ion-nav-view>
+    <ion-nav-view>
+      <div id="home" ng-if="!ngLoaded">
+        <img src="/img/logo.png" id="logo">
+        <p id="title">Boston Student Rights</p>
+        <p id="about">Brought to you by<br>BSAC, Youth on Board<br>
+        and the BPS Office of Engagement</p>
+        <img class="bps-logo" src="/img/bps_logo.png"><br>
+        <img class="org-logo" src="/img/bsac_logo.png">
+        <img class="org-logo" src="/img/yob_logo.png">
+      </div>
+    </ion-nav-view>
   </body>
 </html>

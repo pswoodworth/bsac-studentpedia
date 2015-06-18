@@ -147,5 +147,46 @@ span.back-text{
   -webkit-animation-delay: 2s;
 }
 
+#events-header{
+	text-align: center;
+	width: 100%;
+	border-bottom: 1px solid #DFDFDF;
+	padding-bottom: 8px;
+}
+
+.event{
+	border-bottom: 1px solid #DFDFDF;
+	min-height: 80px;
+	padding-bottom: 10px;
+}
+
+.event-text-wrapper{
+	margin-left: 90px;
+	position: relative;
+	vertical-align: middle;
+}
+
+.event-icon{
+	color: #FFCC63;
+	position: absolute;
+	font-size: 3em !important;
+	border: 1px solid #FFCC63;
+	border-radius: 32px;
+	padding: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.title{
+	text-transform: uppercase;
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+.time{
+	font-size: .9em;
+	color: #777;
+}
+
 
 

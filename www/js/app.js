@@ -5,12 +5,20 @@
 (function() {
 
 var contentReq = null;
+var eventsReq = null;
 var allContent = {};
+
+var loadingScreenDisplayWaitOver = false;
+var countdown = window.setTimeout(function(){
+  loadingScreenDisplayWaitOver = true;
+}, 2000);
 
 function fetchData() {
     var initInjector = angular.injector(["ng"]);
     var $http = initInjector.get("$http");
     var $q = initInjector.get('$q');
+
+    eventsReq = $http.get('http://127.0.0.1:5000/events');
 
     var cachedContent = null;
     try{
@@ -40,10 +48,20 @@ function fetchData() {
     };
 };
 
-function bootstrapApplication() {
-    angular.element(document).ready(function() {
+function bootstrap(){
+      angular.element(document).ready(function() {
         angular.bootstrap(document, ['readThis']);
     });
+};
+
+function bootstrapApplication() {
+  if (loadingScreenDisplayWaitOver){
+    bootstrap();
+  }else{
+    window.setTimeout(function(){
+      bootstrap();
+    }, 1500);
+  }
 };
 
 angular.module('readThis', ['ionic', 'readThis.controllers'])
@@ -62,8 +80,9 @@ angular.module('readThis', ['ionic', 'readThis.controllers'])
   });
 })
 
-.run(function($http, $rootScope){
+.run(function($http, $rootScope, $timeout){
   $rootScope.allContent = JSON.parse(window.localStorage.getItem('bsr-content')) || allContent;
+  $rootScope.ngLoaded = true;
   if (contentReq != null){
     contentReq.success(function(data){
       $rootScope.allContent = data;
@@ -74,6 +93,9 @@ angular.module('readThis', ['ionic', 'readThis.controllers'])
         };
     });
   };
+  eventsReq.success(function(data){
+    $rootScope.events = data;
+  });
 })
 
 .config(function($stateProvider, $urlRouterProvider) {

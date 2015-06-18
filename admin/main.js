@@ -74,7 +74,8 @@ angular.module('readThisEditor', ['ngSanitize', 'ngQuill', 'ui.bootstrap'])
 			date:new Date(),
 			datetime: new Date(),
 			description: '',
-			location: ''
+			location: '',
+			title: ''
 		});
 	};
 

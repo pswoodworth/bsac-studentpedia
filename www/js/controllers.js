@@ -14,7 +14,11 @@ angular.module('readThis.controllers', [])
 
   $scope.dismissDisclaimer = function(){
     $scope.modal.hide();
-    window.localStorage.setItem('bsr-modal-dismissed', true);
+    try{
+      window.localStorage.setItem('bsr-modal-dismissed', true);
+    }catch(err){
+      console.log('local storage not supported.')
+    }
   };
 
   $scope.iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
@@ -41,6 +45,12 @@ angular.module('readThis.controllers', [])
   $scope.item = traverse($scope.allContent, getPath());
 
 
+})
+
+.controller('HomeCtrl', function($scope, $stateParams) {
+  $scope.getMoment = function(date){
+    return moment(date).format("dddd, MMMM Do [at] h:mm");
+  }
 })
 
 .directive('ngBindHtmlUnsafe', function($sce){
