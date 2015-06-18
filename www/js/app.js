@@ -18,7 +18,7 @@ function fetchData() {
     var $http = initInjector.get("$http");
     var $q = initInjector.get('$q');
 
-    eventsReq = $http.get('http://127.0.0.1:5000/events');
+    eventsReq = $http.get('http://student-rights.herokuapp.com/events');
 
     var cachedContent = null;
     try{
