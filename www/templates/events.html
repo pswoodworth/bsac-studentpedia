@@ -1,0 +1,12 @@
+<ion-content id="news">
+	<h4 id="events-header">EVENTS</h4>
+	<div class="event" ng-repeat="event in events">
+		<i class="fa fa-bell-o event-icon"></i>
+		<div class="event-text-wrapper">
+			<h5 class="title">{{event.title}}</h5>
+			<p class="description">{{event.description}}</p>
+			<span class="location">{{event.location}}</span><br>
+			<span class="time">{{getMoment(event.datetime)}}</span>
+		</div>
+	</div>
+</ion-content>

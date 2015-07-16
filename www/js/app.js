@@ -108,11 +108,20 @@ angular.module('readThis', ['ionic', 'readThis.controllers'])
     controller: 'AppCtrl'
   })
 
-  .state('app.browse', {
+  .state('app.home', {
     url: "/home",
     views: {
       'menuContent': {
         templateUrl: "templates/home.html"
+      }
+    }
+  })
+
+  .state('app.events', {
+    url: "/events",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/events.html"
       }
     }
   })
