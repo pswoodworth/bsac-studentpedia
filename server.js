@@ -10,7 +10,7 @@ var express = require('express'),
 
 require('dotenv').load();
 app.use(express.static('www'));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 
 // creating database connections
 var mongoUrl = process.env.MONGO_URI;
@@ -87,7 +87,7 @@ app.get('/admin(|/*)', auth, function(req, res){
 
 app.post('/save', auth, function(req, res){
 	async.parallel([
-		function(next){	
+		function(next){
 			collection.insert(req.body.data, function(err,result){
 				if (err){
 					console.log(err);
@@ -144,5 +144,3 @@ app.set('port', process.env.PORT || 5000);
 app.listen(app.get('port'), function () {
 	console.log('Express server listening on port ' + app.get('port'));
 });
-
-
